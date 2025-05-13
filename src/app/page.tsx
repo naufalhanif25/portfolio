@@ -13,7 +13,7 @@ import { Typing } from "./components/typing";
 import { Canvas } from "@react-three/fiber";
 import { BackToTop } from "./components/backtotop";
 import { Project } from "./components/project";
-import { PlayIcon, PauseIcon } from "./components/musicicon";
+import { AutoScroll } from "./components/autoscroll";
 
 export default function Home() {
     const [code, setCode] = useState<string>('console.log("Naufal Hanif");');
@@ -25,15 +25,33 @@ export default function Home() {
     const scrollDistanceRef = useRef<number>(0);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
     const [blur, setBlur] = useState(0);
+    const autoScrollRef = useRef<HTMLDivElement>(null);
+    const animationFrameRef = useRef<number>(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const positionRef = useRef(0);
+    const headerRef = useRef<HTMLHeadElement | null>(null);
+    const [isAligned, setIsAligned] = useState(false);
+    const [alignPercentage, setAlignPercentage] = useState(0);
+    const [isScrollLeft, setIsScrollLeft] = useState(true);
+
+    let projectIndex = 1;
 
     const handleScroll = () => {
         const scrollY = window.scrollY;
         const maxBlur = 8;
         const maxScroll = 1200;
         const newBlur = Math.min((scrollY / maxScroll) * maxBlur, maxBlur);
+        const fixedTop = headerRef.current?.getBoundingClientRect().top ?? 0;
+        const fixedBottom =
+            headerRef.current?.getBoundingClientRect().bottom ?? 0;
+        const scrollTop = projectRef.current?.getBoundingClientRect().top ?? 0;
+        const percentage = Math.abs(
+            (fixedBottom - scrollTop) / (fixedBottom - fixedTop)
+        );
 
+        setAlignPercentage(percentage);
+        setIsAligned(fixedBottom > scrollTop);
         setBlur(newBlur);
     };
 
@@ -49,6 +67,29 @@ export default function Home() {
 
     const executeCode = () => {
         eval(`${code}`);
+    };
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (audio) {
+            audio.loop = true;
+            audio.volume = 0.25;
+        }
+    }, []);
+
+    const toggleAudio = () => {
+        const audio = audioRef.current;
+
+        if (!audio) return;
+
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play().catch((err) => {
+                console.log("Play failed:", err);
+            });
+        }
+        setIsPlaying(!isPlaying);
     };
 
     useEffect(() => {
@@ -81,26 +122,63 @@ export default function Home() {
     };
 
     useEffect(() => {
-        const audio = audioRef.current;
-        if (audio) {
-            audio.loop = true;
-            audio.volume = 0.25;
-        }
-    }, []);
+        const content = autoScrollRef.current;
+        if (!content) return;
 
-    const toggleAudio = () => {
-        const audio = audioRef.current;
+        const animate = () => {
+            if (isPaused || !content) {
+                animationFrameRef.current = requestAnimationFrame(animate);
 
-        if (!audio) return;
+                return;
+            }
 
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play().catch((err) => {
-                console.log("Play failed:", err);
-            });
-        }
-        setIsPlaying(!isPlaying);
+            if (isScrollLeft) {
+                positionRef.current -= 1;
+            } else {
+                positionRef.current += 1;
+            }
+
+            if (Math.abs(positionRef.current) >= content.scrollWidth / 2) {
+                positionRef.current = 0;
+            }
+
+            content.style.transform = `translateX(${positionRef.current}px)`;
+            animationFrameRef.current = requestAnimationFrame(animate);
+        };
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [isPaused, isScrollLeft]);
+
+    const stopAutoScroll = () => {
+        setIsPaused(true);
+    };
+
+    const startAutoScroll = () => {
+        setIsPaused(false);
+    };
+
+    const renderContent = () => {
+        return Array.from({ length: 2 }).map((_, i) => (
+            <AutoScroll
+                key={`content-${i}`}
+                contactRef={contactRef}
+                scrollToElement={scrollToElement}
+            />
+        ));
+    };
+
+    const scrollToLeft = () => {
+        setIsScrollLeft(true);
+    };
+
+    const scrollToRight = () => {
+        setIsScrollLeft(false);
     };
 
     return (
@@ -115,14 +193,27 @@ export default function Home() {
                         window.scrollTo({ top: 0, behavior: "smooth" })
                     }
                 />
-                <header className="fixed z-100 w-full flex flex-row items-center justify-between py-[16px] px-[24px]">
+                <header
+                    ref={headerRef}
+                    className="fixed z-100 w-full flex flex-row items-center justify-between py-[16px] px-[24px]"
+                    style={{
+                        backgroundColor: `rgba(var(--jaguar-950), ${
+                            isAligned && alignPercentage <= 100
+                                ? alignPercentage
+                                : 0
+                        })`,
+                    }}
+                >
                     <span className="header-icon w-[160px]">
                         <Icons.Icon
                             className="w-[22px] cursor-pointer overflow-visible"
                             fillColor="rgb(var(--supernova-400))"
+                            onClick={() =>
+                                window.scrollTo({ top: 0, behavior: "smooth" })
+                            }
                         />
                     </span>
-                    <nav className="header-nav flex flex-row items-center justify center translate-y-[2px]">
+                    <nav className="header-nav flex flex-row items-center justify center">
                         <button
                             className="link-button w-[86px] flex flex-col items-center text-[12pt] gap-[4px]"
                             onClick={() => scrollToElement(essenceRef)}
@@ -134,7 +225,7 @@ export default function Home() {
                             className="link-button w-[86px] flex flex-col items-center text-[12pt] gap-[4px]"
                             onClick={() => scrollToElement(projectRef)}
                         >
-                            Project
+                            Projects
                             <hr />
                         </button>
                         <button
@@ -151,13 +242,13 @@ export default function Home() {
                             onClick={toggleAudio}
                         >
                             {isPlaying ? (
-                                <PlayIcon
+                                <Icons.PlayIcon
                                     color="rgb(var(--jaguar-950))"
                                     width="24px"
                                     height="24px"
                                 />
                             ) : (
-                                <PauseIcon
+                                <Icons.PauseIcon
                                     color="rgb(var(--jaguar-950))"
                                     width="24px"
                                     height="24px"
@@ -166,7 +257,10 @@ export default function Home() {
                         </button>
                     </span>
                 </header>
-                <main className="w-full flex flex-col items-center justify-center">
+                <main
+                    ref={essenceRef}
+                    className="w-full flex flex-col items-center justify-center"
+                >
                     <Parallax
                         speed={-25}
                         easing="easeInOut"
@@ -175,14 +269,13 @@ export default function Home() {
                             willChange: "transform",
                         }}
                     >
-                        <section
-                            ref={essenceRef}
-                            className="w-full h-[100vh] flex items-center justify-center"
-                        >
+                        <section className="w-full h-[100vh] flex items-center justify-center">
                             <div className="left h-full flex flex-grow flex-col justify-center gap-[36px]">
                                 <span className="flex flex-col gap-[20px] py-[2px]">
                                     <span className="flex flex-col leading-[40px]">
-                                        <h1 className="text-[16pt] font-semibold">HOLA,</h1>
+                                        <h1 className="text-[16pt] font-semibold">
+                                            HOLA,
+                                        </h1>
                                         <h1 className="text-[32pt] font-semibold">
                                             I&apos;AM{" "}
                                             <ins className="subtext no-underline">
@@ -213,6 +306,10 @@ export default function Home() {
                                     <span className="techstack-container w-full items-center gap-y-[16px]">
                                         <Icons.MySQL
                                             className="w-[26px]"
+                                            fillColor="rgb(var(--jaguar-200))"
+                                        />
+                                        <Icons.MongoDB
+                                            className="w-[28px]"
                                             fillColor="rgb(var(--jaguar-200))"
                                         />
                                         <Icons.Java
@@ -251,6 +348,10 @@ export default function Home() {
                                             className="w-[26px]"
                                             fillColor="rgb(var(--jaguar-200))"
                                         />
+                                        <Icons.ExpressJS
+                                            className="w-[28px]"
+                                            fillColor="rgb(var(--jaguar-200))"
+                                        />
                                         <Icons.NodeJS
                                             className="w-[28px]"
                                             fillColor="rgb(var(--jaguar-200))"
@@ -276,17 +377,10 @@ export default function Home() {
                                             onClick={executeCode}
                                             className="jaguar-display-icon"
                                         >
-                                            <svg
-                                                width="20px"
-                                                height="20px"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M6 6.741c0-1.544 1.674-2.505 3.008-1.728l9.015 5.26c1.323.771 1.323 2.683 0 3.455l-9.015 5.258C7.674 19.764 6 18.803 6 17.26V6.741zM17.015 12L8 6.741V17.26L17.015 12z"
-                                                    fill="rgb(var(--jaguar-200))"
-                                                />
-                                            </svg>
+                                            <Icons.Execute 
+                                                className="size-[20px]"
+                                                strokeColor="rgb(var(--jaguar-200))"
+                                            />
                                         </button>
                                     </span>
                                     <textarea
@@ -305,15 +399,16 @@ export default function Home() {
                                     ></textarea>
                                 </span>
                             </div>
-                            <div className="keyboard canvas-bg h-[100vh] min-w-[50vw] items-center justify-center">
+                            <div className="keyboard canvas-bg relative h-[100vh] min-w-[50vw] items-center justify-center">
                                 <Canvas
                                     camera={{ position: [0, 0, 5], fov: 45 }}
+                                    className="keyboard-kanvas"
                                 >
                                     <directionalLight
                                         position={[2, 12, 32]}
                                         intensity={8.4}
                                         castShadow
-                                        color="#f0e5f9"
+                                        color="rgba(var(--jaguar-900), 0.5)"
                                     />
                                     <Keyboard />
                                     <EffectComposer>
@@ -335,77 +430,114 @@ export default function Home() {
                     </Parallax>
                     <section
                         ref={projectRef}
-                        className="section-bg w-full z-1 flex flex-col gap-[24px] pt-[32px] pb-[36px]"
+                        className="section-bg relative w-full z-1 flex flex-col gap-[28px] py-[24px]"
                     >
-                        <h1 className="project-title font-semibold text-[36px] text-center">
-                            Project
-                        </h1>
-                        <div className="relative project-section w-full flex">
-                            <div className="absolute left-0 top-0 w-full h-full flex items-center justify-between">
-                                <svg
-                                    className="arrow-button w-[74px] h-[74px] z-100"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    onClick={handleScrollLeft}
-                                >
-                                    <path
-                                        d="M15 18L9 12L15 6"
-                                        className="translate-x-[-0.8px]"
-                                        stroke="currentColor"
-                                        strokeWidth="1"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                                <svg
-                                    className="arrow-button w-[74px] h-[674x] z-100"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    onClick={handleScrollRight}
-                                >
-                                    <path
-                                        d="M9 18L15 12L9 6"
-                                        className="translate-x-[0.8px]"
-                                        stroke="currentColor"
-                                        strokeWidth="1"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            </div>
-                            <div className="container-fade left-0 z-10 fixed w-full flex flex-row items-center justify-between pointer-events-none"></div>
+                        <div className="w-full flex flex-row items-center justify-start px-[24px] gap-[12px]">
+                            {isPaused ? (
+                                <Icons.Play 
+                                    className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
+                                    onClick={startAutoScroll}
+                                />
+                            ) : (
+                                <Icons.Pause 
+                                    className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
+                                    onClick={stopAutoScroll}
+                                />
+                            )}
+                            {isScrollLeft ? (
+                                <Icons.ArrowRight 
+                                    className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
+                                    onClick={scrollToRight}
+                                />
+                            ) : (
+                                <Icons.ArrowLeft
+                                    className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
+                                    onClick={scrollToLeft}
+                                />
+                            )}
+                        </div>
+                        <div
+                            className="overflow-hidden"
+                            onWheel={(e) => e.preventDefault()}
+                            onTouchMove={(e) => e.preventDefault()}
+                        >
                             <div
-                                ref={scrollRef}
-                                className="w-full h-full py-[16px] no-scrollbar scroll-smooth overflow-hidden"
-                                onWheel={(e) => e.preventDefault()}
-                                onTouchMove={(e) => e.preventDefault()}
+                                ref={autoScrollRef}
+                                className="scroll-section-child w-fit px-[32px] gap-[64px] flex flex-row"
                             >
+                                {renderContent()}
+                            </div>
+                        </div>
+                        <div className="py-[16px]">
+                            <h1 className="project-title font-semibold text-[36px] text-center">
+                                Projects
+                            </h1>
+                            <div className="relative project-section w-full flex">
+                                <div className="absolute left-0 top-0 w-full h-full flex items-center justify-between">
+                                    <Icons.ScrollLeft 
+                                        className="arrow-button size-[74px] z-100"
+                                        onClick={handleScrollLeft}
+                                        strokeColor="currentColor"
+                                        strokeWidth="1"
+                                    />
+                                    <Icons.ScrollRight 
+                                        className="arrow-button size-[74px] z-100"
+                                        onClick={handleScrollRight}
+                                        strokeColor="currentColor"
+                                        strokeWidth="1"
+                                    />
+                                </div>
+                                <div className="container-fade left-0 z-10 fixed w-full flex flex-row items-center justify-between pointer-events-none"></div>
                                 <div
-                                    ref={scrollContainerRef}
-                                    className="w-fit flex flex-row gap-[16px] px-[20px]"
+                                    ref={scrollRef}
+                                    className="w-full h-full py-[16px] no-scrollbar scroll-smooth overflow-hidden"
+                                    onWheel={(e) => e.preventDefault()}
+                                    onTouchMove={(e) => e.preventDefault()}
                                 >
-                                    <Project
-                                        imageUrl="/image/mubes.png"
-                                        content="MUBES HMIF 2024"
-                                        desc="HMIF 2024 Grand Conference website"
-                                    />
-                                    <Project
-                                        imageUrl="/image/tkid.png"
-                                        content="TransKoetaradja.id"
-                                        desc="Trans Koetaradja city bus website prototype"
-                                    />
-                                    <Project
-                                        imageUrl="/image/bluestamp.png"
-                                        content="Bluestamp"
-                                        desc="Story sharing website prototype"
-                                    />
-                                    <Project
-                                        imageUrl="/image/zenosent.png"
-                                        content="Zenosent"
-                                        desc="Journal finder desktop app"
-                                    />
+                                    <div
+                                        ref={scrollContainerRef}
+                                        className="w-fit flex flex-row gap-[16px] px-[20px]"
+                                    >
+                                        <Project
+                                            projectIndex={projectIndex++}
+                                            imageUrl="/image/mubes.png"
+                                            content="MUBES HMIF 2024"
+                                            desc="HMIF 2024 Grand Conference website"
+                                            techstack={["Laravel", "MySQL"]}
+                                            github="https://github.com/naufalhanif25/website-mubes-2024.git"
+                                        />
+                                        <Project
+                                            projectIndex={projectIndex++}
+                                            imageUrl="/image/tkid.png"
+                                            content="TransKoetaradja.id"
+                                            desc="Trans Koetaradja city bus website prototype"
+                                            techstack={["Figma"]}
+                                        />
+                                        <Project
+                                            projectIndex={projectIndex++}
+                                            imageUrl="/image/bluestamp.png"
+                                            content="Bluestamp"
+                                            desc="Story sharing website prototype"
+                                            techstack={["Laravel", "MySQL"]}
+                                            github="https://github.com/naufalhanif25/bluestamp.git"
+                                        />
+                                        <Project
+                                            projectIndex={projectIndex++}
+                                            imageUrl="/image/zenosent.png"
+                                            content="Zenosent"
+                                            desc="Journal finder desktop app"
+                                            techstack={["Electron.js"]}
+                                            github="https://github.com/naufalhanif25/zenosent.git"
+                                        />
+                                        <Project
+                                            projectIndex={projectIndex++}
+                                            imageUrl="/image/teras-beasiswa.png"
+                                            content="Teras Beasiswa"
+                                            desc="Indonesia scholarship search engine"
+                                            techstack={["Laravel", "MySQL"]}
+                                            github="https://github.com/naufalhanif25/teras-beasiswa.git"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +567,9 @@ export default function Home() {
                             className="footer-icon w-[24px] cursor-pointer"
                             fillColor="rgb(var(--jaguar-100))"
                             onClick={() =>
-                                window.open("https://api.whatsapp.com/send?phone=6282181916822")
+                                window.open(
+                                    "https://api.whatsapp.com/send?phone=6282181916822"
+                                )
                             }
                         />
                         <Icons.Instagram

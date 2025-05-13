@@ -33,7 +33,7 @@
 * {
     font-family: var(--font-montserrat);
     color: rgb(var(--jaguar-50));
-    cursor: url('data:image/svg+xml;utf8,<svg width="16" height="16" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.92098 2.29951C6.93571 1.5331 5.5 2.23523 5.5 3.48349V20.4923C5.5 21.9145 7.2945 22.5382 8.17661 21.4226L12.3676 16.1224C12.6806 15.7267 13.1574 15.4958 13.6619 15.4958H20.5143C21.9425 15.4958 22.5626 13.6887 21.4353 12.8119L7.92098 2.29951Z" fill="%23f0e5f9"/></svg>')
+    cursor: url('data:image/svg+xml;utf8,<svg width="20" height="20" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.92098 2.29951C6.93571 1.5331 5.5 2.23523 5.5 3.48349V20.4923C5.5 21.9145 7.2945 22.5382 8.17661 21.4226L12.3676 16.1224C12.6806 15.7267 13.1574 15.4958 13.6619 15.4958H20.5143C21.9425 15.4958 22.5626 13.6887 21.4353 12.8119L7.92098 2.29951Z" fill="%23f0e5f9"/></svg>')
             0 0,
         auto;
 }
@@ -56,6 +56,22 @@ hr {
         transparent
     );
     height: 1.2px;
+}
+
+.second-hr {
+    border: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(var(--supernova-400)),
+        transparent
+    );
+    height: 1.2px;
+}
+
+.solid-hr {
+    border: 0.1px solid rgb(var(--supernova-400));
+    background: none;
 }
 
 header {
@@ -242,8 +258,17 @@ footer {
     transition: all 320ms ease-out;
 }
 
+.keyboard-canvas {
+    position: relative;
+    display: block;
+}
+
 @media (max-width: 800px) {
     .keyboard {
+        display: none;
+    }
+
+    .keyboard-canvas {
         display: none;
     }
 }
@@ -271,7 +296,7 @@ footer {
     }
 
     .footer-icon-container * {
-        fill: rgb(var(--jaguar-100))
+        fill: rgb(var(--jaguar-100));
     }
 }
 
@@ -357,6 +382,11 @@ footer {
     animation: frombottom 1s ease-in-out;
 }
 
+.project-index-container {
+    background-color: rgb(var(--supernova-400));
+    box-shadow: -2px 2px 8px rgba(var(--supernova-500), 0.25);
+}
+
 .project-section {
     animation: frombottom 1s ease-in-out;
 }
@@ -369,6 +399,10 @@ footer {
 .project-view img {
     height: 232px;
     transition: 160ms ease-out;
+}
+
+.scroll-container {
+    animation: frombottom 1s ease-in-out;
 }
 
 @media (max-width: 800px) {
@@ -385,6 +419,19 @@ footer {
     .project-view {
         width: calc(100vw - 36px);
     }
+}
+
+.project-techstack {
+    background-color: rgb(var(--supernova-400));
+}
+
+.project-icon {
+    fill: rgb(var(--supernova-400));
+    transition: 160ms ease-out;
+}
+
+.project-icon:hover {
+    transform: scale(108%);
 }
 
 .container-fade {
@@ -404,7 +451,7 @@ footer {
     background: linear-gradient(
         0deg,
         rgba(var(--jaguar-950), 0.25),
-        transparent 85%
+        transparent 75%
     );
 }
 
@@ -434,6 +481,45 @@ footer {
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.experience-scroll-button {
+    border: 2px solid rgb(var(--supernova-400));
+    transition: 160ms ease-out;
+}
+
+.experience-scroll-button:hover {
+    background-color: rgb(var(--supernova-400));
+}
+
+.experience-scroll-button svg path {
+    transition: 160ms ease-out;
+}
+
+.experience-scroll-button:hover svg path {
+    stroke: rgb(var(--supernova-600));
+    stroke-width: 5;
+}
+
+.hitmeup-button {
+    transition: 160ms ease-out;
+}
+
+.hitmeup-button span svg {
+    transition: 160ms ease-out;
+}
+
+.hitmeup-button:hover span svg {
+    transform: scale(112%);
+}
+
+.scroll-section-child {
+    animation: frombottom 1s ease-out;
+}
+
+.other-skills-container {
+    border: 1.6px solid rgb(var(--jaguar-500));
+    background-color: rgba(var(--jaguar-900), 0.25);
 }
 
 @keyframes frombottom {
