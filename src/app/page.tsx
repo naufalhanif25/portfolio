@@ -34,30 +34,46 @@ export default function Home() {
     const [isAligned, setIsAligned] = useState(false);
     const [alignPercentage, setAlignPercentage] = useState(0);
     const [isScrollLeft, setIsScrollLeft] = useState(true);
+    const [isLargeScreen, setIsLargeScreen] = useState(false);
 
     let projectIndex = 1;
 
-    const handleScroll = () => {
-        const scrollY = window.scrollY;
-        const maxBlur = 8;
-        const maxScroll = 1200;
-        const newBlur = Math.min((scrollY / maxScroll) * maxBlur, maxBlur);
-        const fixedTop = headerRef.current?.getBoundingClientRect().top ?? 0;
-        const fixedBottom =
-            headerRef.current?.getBoundingClientRect().bottom ?? 0;
-        const scrollTop = projectRef.current?.getBoundingClientRect().top ?? 0;
-        const percentage = Math.abs(
-            (fixedBottom - scrollTop) / (fixedBottom - fixedTop)
-        );
-
-        setAlignPercentage(percentage);
-        setIsAligned(fixedBottom > scrollTop);
-        setBlur(newBlur);
-    };
-
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+        let ticking = false;
 
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const maxBlur = 8;
+                    const maxScroll = 1200;
+                    const newBlur = Math.min(
+                        (scrollY / maxScroll) * maxBlur,
+                        maxBlur
+                    );
+
+                    const rect = headerRef.current?.getBoundingClientRect();
+
+                    const fixedTop = rect?.top ?? 0;
+                    const fixedBottom = rect?.bottom ?? 0;
+                    const scrollTop =
+                        projectRef.current?.getBoundingClientRect().top ?? 0;
+                    const percentage = Math.abs(
+                        (fixedBottom - scrollTop) / (fixedBottom - fixedTop)
+                    );
+
+                    setAlignPercentage(percentage);
+                    setIsAligned(fixedBottom > scrollTop);
+                    setBlur(newBlur);
+
+                    ticking = false;
+                });
+
+                ticking = true;
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -181,6 +197,17 @@ export default function Home() {
         setIsScrollLeft(false);
     };
 
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsLargeScreen(window.innerWidth > 800);
+        };
+
+        checkScreenSize();
+        window.addEventListener("resize", checkScreenSize);
+
+        return () => window.removeEventListener("resize", checkScreenSize);
+    }, []);
+
     return (
         <>
             <ParallaxProvider>
@@ -273,9 +300,9 @@ export default function Home() {
                             <div className="left h-full flex flex-grow flex-col justify-center gap-[36px]">
                                 <span className="flex flex-col gap-[20px] py-[2px]">
                                     <span className="flex flex-col leading-[40px]">
-                                        <h1 className="text-[16pt] font-semibold">
+                                        <p className="text-[16pt] font-semibold">
                                             HOLA,
-                                        </h1>
+                                        </p>
                                         <h1 className="text-[32pt] font-semibold">
                                             I&apos;AM{" "}
                                             <ins className="subtext no-underline">
@@ -377,7 +404,7 @@ export default function Home() {
                                             onClick={executeCode}
                                             className="jaguar-display-icon"
                                         >
-                                            <Icons.Execute 
+                                            <Icons.Execute
                                                 className="size-[20px]"
                                                 strokeColor="rgb(var(--jaguar-200))"
                                             />
@@ -400,31 +427,36 @@ export default function Home() {
                                 </span>
                             </div>
                             <div className="keyboard canvas-bg relative h-[100vh] min-w-[50vw] items-center justify-center">
-                                <Canvas
-                                    camera={{ position: [0, 0, 5], fov: 45 }}
-                                    className="keyboard-kanvas"
-                                >
-                                    <directionalLight
-                                        position={[2, 12, 32]}
-                                        intensity={8.4}
-                                        castShadow
-                                        color="rgba(var(--jaguar-900), 0.5)"
-                                    />
-                                    <Keyboard />
-                                    <EffectComposer>
-                                        <DepthOfField
-                                            focusDistance={24}
-                                            focalLength={16}
-                                            bokehScale={0.12}
-                                            height={640}
+                                {isLargeScreen && (
+                                    <Canvas
+                                        camera={{
+                                            position: [0, 0, 5],
+                                            fov: 45,
+                                        }}
+                                        className="keyboard-kanvas"
+                                    >
+                                        <directionalLight
+                                            position={[2, 12, 32]}
+                                            intensity={8.4}
+                                            castShadow
+                                            color="rgba(var(--jaguar-900), 0.5)"
                                         />
-                                        <Bloom
-                                            intensity={0.04}
-                                            luminanceThreshold={0.012}
-                                            luminanceSmoothing={0.008}
-                                        />
-                                    </EffectComposer>
-                                </Canvas>
+                                        <Keyboard />
+                                        <EffectComposer>
+                                            <DepthOfField
+                                                focusDistance={24}
+                                                focalLength={16}
+                                                bokehScale={0.12}
+                                                height={640}
+                                            />
+                                            <Bloom
+                                                intensity={0.04}
+                                                luminanceThreshold={0.012}
+                                                luminanceSmoothing={0.008}
+                                            />
+                                        </EffectComposer>
+                                    </Canvas>
+                                )}
                             </div>
                         </section>
                     </Parallax>
@@ -434,18 +466,18 @@ export default function Home() {
                     >
                         <div className="w-full flex flex-row items-center justify-start px-[24px] gap-[12px]">
                             {isPaused ? (
-                                <Icons.Play 
+                                <Icons.Play
                                     className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
                                     onClick={startAutoScroll}
                                 />
                             ) : (
-                                <Icons.Pause 
+                                <Icons.Pause
                                     className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
                                     onClick={stopAutoScroll}
                                 />
                             )}
                             {isScrollLeft ? (
-                                <Icons.ArrowRight 
+                                <Icons.ArrowRight
                                     className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"
                                     onClick={scrollToRight}
                                 />
@@ -474,13 +506,13 @@ export default function Home() {
                             </h1>
                             <div className="relative project-section w-full flex">
                                 <div className="absolute left-0 top-0 w-full h-full flex items-center justify-between">
-                                    <Icons.ScrollLeft 
+                                    <Icons.ScrollLeft
                                         className="arrow-button size-[74px] z-100"
                                         onClick={handleScrollLeft}
                                         strokeColor="currentColor"
                                         strokeWidth="1"
                                     />
-                                    <Icons.ScrollRight 
+                                    <Icons.ScrollRight
                                         className="arrow-button size-[74px] z-100"
                                         onClick={handleScrollRight}
                                         strokeColor="currentColor"

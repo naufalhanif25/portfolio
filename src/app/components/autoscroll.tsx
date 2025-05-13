@@ -98,6 +98,7 @@ export function AutoScroll({
                                 <img
                                     className="size-[64px]"
                                     src="image/hmif.png"
+                                    alt="HMIF"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
                                     <p className="text-[12pt] font-semibold text-nowrap text-center">
@@ -113,6 +114,7 @@ export function AutoScroll({
                                 <img
                                     className="size-[64px]"
                                     src="image/usk.png"
+                                    alt="Syiah Kuala University"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
                                     <p className="text-[12pt] font-semibold text-nowrap text-center">
@@ -124,9 +126,9 @@ export function AutoScroll({
                                     </p>
                                 </span>
                                 <span className="flex flex-col items-center justify-center gap-[4px]">
-                                    <h1 className="text-[10pt] font-medium text-nowrap text-center">
+                                    <p className="text-[10pt] font-medium text-nowrap text-center">
                                         Last GPA
-                                    </h1>
+                                    </p>
                                     <h1 className="text-[12pt] font-semibold text-nowrap text-center">
                                         3.62 / 4
                                     </h1>
@@ -161,7 +163,7 @@ export function AutoScroll({
             <div className="flex flex-row items-center justify-center gap-[16px]">
                 <Review
                     title="Happy Clients"
-                    value={6}
+                    value={3}
                     icon={
                         <Icons.SmileEmoji
                             className="size-[38px]"

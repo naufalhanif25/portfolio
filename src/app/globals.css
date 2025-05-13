@@ -86,6 +86,7 @@ footer {
     justify-content: space-between;
     gap: 16px;
     transition: all 320ms ease-out;
+    background-color: rgb(var(--jaguar-950));
 }
 
 @media (max-width: 600px) {

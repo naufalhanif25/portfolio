@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as Icons from "./icons";
+import { title } from "process";
 
 export function Project({
     projectIndex,
@@ -53,6 +54,7 @@ export function Project({
                 <img
                     src={imageUrl}
                     className="w-full h-full object-cover opacity-[0.85]"
+                    alt={content}
                 />
             </span>
             <span className="flex flex-col items-center justify-center w-full gap-[6px]">
