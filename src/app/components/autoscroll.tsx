@@ -220,7 +220,7 @@ export function AutoScroll({
                 </h1>
                 <span className="jaguar-display flex flex-row items-center justify-center gap-[12px] py-[12px] px-[18px] rounded-[12px]">
                     <Icons.Photoshop className="size-[36px]" />
-                    <Icons.Photoshop className="size-[36px]" />
+                    <Icons.Illustrator className="size-[36px]" />
                     <Icons.PremierePro className="size-[36px]" />
                     <Icons.Figma className="size-[32px]" />
                     <Icons.Blender className="size-[32px]" />
