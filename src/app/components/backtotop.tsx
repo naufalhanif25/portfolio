@@ -15,18 +15,23 @@ export function BackToTop({
 
     useEffect(() => {
         const bodyWidth = document.querySelector("body")?.clientWidth;
+        const bodyHeight = document.querySelector("body")?.clientHeight;
 
         const handleScroll = () => {
             const isBottom =
                 window.innerHeight + window.scrollY >=
-                document.body.offsetHeight - 1;
+                document.body.offsetHeight - 8;
 
-            if (isBottom && Number(bodyWidth) >= 800) {
+            if (isBottom) {
                 if (buttonRef.current) {
-                    buttonRef.current.style.transform = "translateY(-34px)";
+                    if (Number(bodyWidth) >= 800 || Number(bodyHeight) >= 800) {
+                        buttonRef.current.style.transform = "translateY(-34px)";
+                    } 
+                    else {
+                        buttonRef.current.style.transform = "translateY(-24px)";
+                    }
                 }
-            }
-            else {
+            } else {
                 if (buttonRef.current) {
                     buttonRef.current.style.transform = "translateY(0px)";
                 }

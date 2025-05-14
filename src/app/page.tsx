@@ -34,7 +34,8 @@ export default function Home() {
     const [isAligned, setIsAligned] = useState(false);
     const [alignPercentage, setAlignPercentage] = useState(0);
     const [isScrollLeft, setIsScrollLeft] = useState(true);
-    const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const [bodyWidth, setBodyWidth] = useState(0);
+    const [bodyHeight, setBodyHeight] = useState(0);
 
     let projectIndex = 1;
 
@@ -151,7 +152,11 @@ export default function Home() {
             if (isScrollLeft) {
                 positionRef.current -= 1;
             } else {
-                positionRef.current += 1;
+                if (positionRef.current < 0) {
+                    positionRef.current += 1;
+                } else {
+                    return;
+                }
             }
 
             if (Math.abs(positionRef.current) >= content.scrollWidth / 2) {
@@ -199,7 +204,11 @@ export default function Home() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsLargeScreen(window.innerWidth > 800);
+            const viewHeight = window.innerHeight;
+            const viewWidth = window.innerWidth;
+
+            setBodyWidth(viewWidth);
+            setBodyHeight(viewHeight);
         };
 
         checkScreenSize();
@@ -207,6 +216,177 @@ export default function Home() {
 
         return () => window.removeEventListener("resize", checkScreenSize);
     }, []);
+
+    const renderFirstSection = () => {
+        return (
+            <section
+                className={`w-full flex items-center justify-center ${
+                    bodyHeight > 800
+                        ? "h-screen"
+                        : bodyHeight > 600
+                        ? "h-svh"
+                        : "h-fit pt-[20px]"
+                }`}
+            >
+                <div className="left h-full flex flex-grow flex-col justify-center gap-[36px]">
+                    <span className="flex flex-col gap-[20px] py-[2px]">
+                        <span className="flex flex-col leading-[40px]">
+                            <p className="text-[16pt] font-semibold">HOLA,</p>
+                            <h1 className="text-[32pt] font-semibold">
+                                I&apos;AM{" "}
+                                <ins className="subtext no-underline">
+                                    NAUFAL HANIF
+                                </ins>
+                            </h1>
+                        </span>
+                        <span className="tags w-fit px-[24px] py-[4px]">
+                            <Typing
+                                texts={[
+                                    "Software Developer",
+                                    "Machine Learner",
+                                    "UI/UX Designer",
+                                    "3D Animator",
+                                ]}
+                                speed={100}
+                                className="text-[11pt] font-medium select-none"
+                            />
+                        </span>
+                    </span>
+                    <span className="flex flex-col gap-[20px]">
+                        <p className="text-[12pt] text-justify">
+                            I am an Informatics student at Syiah Kuala
+                            University with interests in software development,
+                            machine learning, UI/UX design, and 3D animation.
+                        </p>
+                        <span className="techstack-container w-full items-center gap-y-[16px]">
+                            <Icons.MySQL
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.MongoDB
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.Java
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.Python
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.PHP
+                                className="w-[30px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.Laravel
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.JS
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.TS
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.HTML
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.CSS
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.TailwindCSS
+                                className="w-[26px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.ExpressJS
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.NodeJS
+                                className="w-[28px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.ElectronJS
+                                className="w-[24px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.NextJS
+                                className="w-[24px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                            <Icons.ReactJS
+                                className="w-[30px]"
+                                fillColor="rgb(var(--jaguar-200))"
+                            />
+                        </span>
+                    </span>
+                    <span className="jaguar-display jaguar-display-font text-[10pt] pb-[16px] flex flex-col gap-[16px] rounded-[8px] overflow-hidden">
+                        <span className="jaguar-display-header w-full flex flex-row align-center justify-between text-[11pt] px-[24px] py-[8px]">
+                            saymyname.js
+                            <button
+                                onClick={executeCode}
+                                className="jaguar-display-icon"
+                            >
+                                <Icons.Execute
+                                    className="size-[20px]"
+                                    strokeColor="rgb(var(--jaguar-200))"
+                                />
+                            </button>
+                        </span>
+                        <textarea
+                            id="inner-display"
+                            className="h-[48px] text-[12pt] px-[24px] outline-none resize-none overflow-auto no-scrollbar"
+                            style={{
+                                overflow: "auto",
+                                scrollbarWidth: "none",
+                                msOverflowStyle: "none",
+                            }}
+                            spellCheck={false}
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                        ></textarea>
+                    </span>
+                </div>
+                <div className="keyboard canvas-bg relative h-[100vh] min-w-[50vw] items-center justify-center">
+                    {bodyWidth > 800 && (
+                        <Canvas
+                            camera={{
+                                position: [0, 0, 5],
+                                fov: 45,
+                            }}
+                            className="keyboard-kanvas"
+                        >
+                            <directionalLight
+                                position={[2, 12, 32]}
+                                intensity={8.4}
+                                castShadow
+                                color="rgba(var(--jaguar-900), 0.5)"
+                            />
+                            <Keyboard />
+                            <EffectComposer>
+                                <DepthOfField
+                                    focusDistance={24}
+                                    focalLength={16}
+                                    bokehScale={0.12}
+                                    height={640}
+                                />
+                                <Bloom
+                                    intensity={0.04}
+                                    luminanceThreshold={0.012}
+                                    luminanceSmoothing={0.008}
+                                />
+                            </EffectComposer>
+                        </Canvas>
+                    )}
+                </div>
+            </section>
+        );
+    };
 
     return (
         <>
@@ -288,178 +468,20 @@ export default function Home() {
                     ref={essenceRef}
                     className="w-full flex flex-col items-center justify-center"
                 >
-                    <Parallax
-                        speed={-25}
-                        easing="easeInOut"
-                        style={{
-                            filter: `blur(${blur}px)`,
-                            willChange: "transform",
-                        }}
-                    >
-                        <section className="w-full h-[100vh] flex items-center justify-center">
-                            <div className="left h-full flex flex-grow flex-col justify-center gap-[36px]">
-                                <span className="flex flex-col gap-[20px] py-[2px]">
-                                    <span className="flex flex-col leading-[40px]">
-                                        <p className="text-[16pt] font-semibold">
-                                            HOLA,
-                                        </p>
-                                        <h1 className="text-[32pt] font-semibold">
-                                            I&apos;AM{" "}
-                                            <ins className="subtext no-underline">
-                                                NAUFAL HANIF
-                                            </ins>
-                                        </h1>
-                                    </span>
-                                    <span className="tags w-fit px-[24px] py-[4px]">
-                                        <Typing
-                                            texts={[
-                                                "Software Developer",
-                                                "Machine Learner",
-                                                "UI/UX Designer",
-                                                "3D Animator",
-                                            ]}
-                                            speed={100}
-                                            className="text-[11pt] font-medium select-none"
-                                        />
-                                    </span>
-                                </span>
-                                <span className="flex flex-col gap-[20px]">
-                                    <p className="text-[12pt] text-justify">
-                                        I am an Informatics student at Syiah
-                                        Kuala University with interests in
-                                        software development, machine learning,
-                                        UI/UX design, and 3D animation.
-                                    </p>
-                                    <span className="techstack-container w-full items-center gap-y-[16px]">
-                                        <Icons.MySQL
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.MongoDB
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.Java
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.Python
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.PHP
-                                            className="w-[30px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.Laravel
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.JS
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.TS
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.HTML
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.CSS
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.TailwindCSS
-                                            className="w-[26px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.ExpressJS
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.NodeJS
-                                            className="w-[28px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.ElectronJS
-                                            className="w-[24px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.NextJS
-                                            className="w-[24px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                        <Icons.ReactJS
-                                            className="w-[30px]"
-                                            fillColor="rgb(var(--jaguar-200))"
-                                        />
-                                    </span>
-                                </span>
-                                <span className="jaguar-display jaguar-display-font text-[10pt] pb-[16px] flex flex-col gap-[16px] rounded-[8px] overflow-hidden">
-                                    <span className="jaguar-display-header w-full flex flex-row align-center justify-between text-[11pt] px-[24px] py-[8px]">
-                                        saymyname.js
-                                        <button
-                                            onClick={executeCode}
-                                            className="jaguar-display-icon"
-                                        >
-                                            <Icons.Execute
-                                                className="size-[20px]"
-                                                strokeColor="rgb(var(--jaguar-200))"
-                                            />
-                                        </button>
-                                    </span>
-                                    <textarea
-                                        id="inner-display"
-                                        className="h-[48px] text-[12pt] px-[24px] outline-none resize-none overflow-auto no-scrollbar"
-                                        style={{
-                                            overflow: "auto",
-                                            scrollbarWidth: "none",
-                                            msOverflowStyle: "none",
-                                        }}
-                                        spellCheck={false}
-                                        value={code}
-                                        onChange={(e) =>
-                                            setCode(e.target.value)
-                                        }
-                                    ></textarea>
-                                </span>
-                            </div>
-                            <div className="keyboard canvas-bg relative h-[100vh] min-w-[50vw] items-center justify-center">
-                                {isLargeScreen && (
-                                    <Canvas
-                                        camera={{
-                                            position: [0, 0, 5],
-                                            fov: 45,
-                                        }}
-                                        className="keyboard-kanvas"
-                                    >
-                                        <directionalLight
-                                            position={[2, 12, 32]}
-                                            intensity={8.4}
-                                            castShadow
-                                            color="rgba(var(--jaguar-900), 0.5)"
-                                        />
-                                        <Keyboard />
-                                        <EffectComposer>
-                                            <DepthOfField
-                                                focusDistance={24}
-                                                focalLength={16}
-                                                bokehScale={0.12}
-                                                height={640}
-                                            />
-                                            <Bloom
-                                                intensity={0.04}
-                                                luminanceThreshold={0.012}
-                                                luminanceSmoothing={0.008}
-                                            />
-                                        </EffectComposer>
-                                    </Canvas>
-                                )}
-                            </div>
-                        </section>
-                    </Parallax>
+                    {bodyHeight > 600 && bodyWidth > 800 ? (
+                        <Parallax
+                            speed={-25}
+                            easing="easeInOut"
+                            style={{
+                                filter: `blur(${blur}px)`,
+                                willChange: "transform",
+                            }}
+                        >
+                            {renderFirstSection()}
+                        </Parallax>
+                    ) : (
+                        renderFirstSection()
+                    )}
                     <section
                         ref={projectRef}
                         className="section-bg relative w-full z-1 flex flex-col gap-[28px] py-[24px]"
