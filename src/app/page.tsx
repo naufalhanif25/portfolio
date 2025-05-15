@@ -446,7 +446,7 @@ export default function Home() {
                     </nav>
                     <span className="w-[160px] flex flex-row items-center justify-end">
                         <button
-                            className="solid-button text-[11pt] font-[500] py-[4px] px-[20px] rounded-[32px]"
+                            className="music-nav-button solid-button text-[11pt] font-[500] py-[4px] px-[20px] rounded-[32px]"
                             onClick={toggleAudio}
                         >
                             {isPlaying ? (
@@ -487,7 +487,7 @@ export default function Home() {
                         ref={projectRef}
                         className="section-bg relative w-full z-1 flex flex-col gap-[28px] py-[24px]"
                     >
-                        <div className="w-full flex flex-row items-center justify-start px-[24px] gap-[12px]">
+                        <div className="experience-nav-buttons w-full flex flex-row items-center justify-start px-[24px] gap-[12px]">
                             {isPaused ? (
                                 <Icons.Play
                                     className="size-[20px] fill-[rgb(var(--supernova-400))] hover:fill-[rgb(var(--supernova-300))] duration-[160ms] ease-out"

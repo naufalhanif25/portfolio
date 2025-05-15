@@ -515,12 +515,20 @@ footer {
 }
 
 .scroll-section-child {
-    animation: frombottom 1s ease-out;
+    animation: frombottom 1s ease-in-out;
 }
 
 .other-skills-container {
     border: 1.6px solid rgb(var(--jaguar-500));
     background-color: rgba(var(--jaguar-900), 0.25);
+}
+
+.music-nav-button {
+    animation: fromright 1s ease-in-out;
+}
+
+.experience-nav-buttons {
+    animation: fromleft 1s ease-in-out;
 }
 
 @keyframes frombottom {
