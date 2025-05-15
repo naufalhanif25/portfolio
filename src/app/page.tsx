@@ -9,6 +9,7 @@ import {
 } from "@react-three/postprocessing";
 import { ParallaxProvider, Parallax } from "react-scroll-parallax";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import * as Icons from "./components/icons";
 import { Typing } from "./components/typing";
 import { Canvas } from "@react-three/fiber";
@@ -653,6 +654,7 @@ export default function Home() {
                 <div className="bottom-fade z-1 w-full h-[64px] fixed left-0 bottom-0 pointer-events-none"></div>
             </ParallaxProvider>
             <SpeedInsights/>
+            <Analytics/>
         </>
     );
 }
