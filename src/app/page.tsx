@@ -391,7 +391,6 @@ export default function Home() {
 
     return (
         <>
-            <SpeedInsights/>
             <ParallaxProvider>
                 <audio ref={audioRef} src="/music/bgmusic.mp3" />
                 <BackToTop
@@ -653,6 +652,7 @@ export default function Home() {
                 </footer>
                 <div className="bottom-fade z-1 w-full h-[64px] fixed left-0 bottom-0 pointer-events-none"></div>
             </ParallaxProvider>
+            <SpeedInsights/>
         </>
     );
 }
