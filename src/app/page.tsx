@@ -8,6 +8,7 @@ import {
     DepthOfField,
 } from "@react-three/postprocessing";
 import { ParallaxProvider, Parallax } from "react-scroll-parallax";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import * as Icons from "./components/icons";
 import { Typing } from "./components/typing";
 import { Canvas } from "@react-three/fiber";
@@ -390,6 +391,7 @@ export default function Home() {
 
     return (
         <>
+            <SpeedInsights/>
             <ParallaxProvider>
                 <audio ref={audioRef} src="/music/bgmusic.mp3" />
                 <BackToTop
