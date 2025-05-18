@@ -17,11 +17,18 @@ export const metadata: Metadata = {
     description:
         "A third-year informatics student at Syiah Kuala University interested in website development and machine learning.",
     keywords: [
+        "Naufal",
+        "Hanif",
         "Naufal Hanif",
         "Portfolio",
         "Website development",
         "Machine learning",
+        "IT",
+        "Code",
+        "Programmer",
+        "Developer",
         "Informatics",
+        "Syiah Kuala",
         "Syiah Kuala University",
     ],
     icons: "image/myicon.ico",
