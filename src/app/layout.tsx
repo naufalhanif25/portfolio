@@ -22,7 +22,9 @@ export const metadata: Metadata = {
         "Naufal Hanif",
         "Portfolio",
         "Website development",
+        "Software development",
         "Machine learning",
+        "UI/UX design",
         "IT",
         "Code",
         "Programmer",
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
         "Syiah Kuala",
         "Syiah Kuala University",
     ],
-    icons: "image/myicon.ico",
+    icons: "image/icon.ico",
 };
 
 export default function RootLayout({
