@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         "Syiah Kuala",
         "Syiah Kuala University",
     ],
-    icons: "image/icon.ico",
+    icons: "images/icon.ico",
 };
 
 export default function RootLayout({
