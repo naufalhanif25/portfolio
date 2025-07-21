@@ -458,17 +458,17 @@ export default function Home() {
                             style={{ height: `${photoContainerHeight}px` }}
                             onMouseEnter={() => setTimeout(() => setShowScrollingText(true), 320)}
                             onMouseLeave={() => setTimeout(() => setShowScrollingText(false), 320)}
-                        >
-                            <span className="flex flex-col h-full w-full items-center justify-center rounded-[32px] overflow-hidden">
-                                <span className="name-header absolute top-0 w-full px-[32px] py-[16px] flex items-center justify-between rounded-t-[32px] overflow-hidden z-1">
+                        >       
+                            <span ref={nameContainerRef} className="name-container absolute bottom-0 right-0 w-full h-full flex flex-col items-center justify-center rounded-[32px] overflow-hidden">
+                                <h1 className="name-text text-center font-thin">NAUFAL</h1>
+                                <h1 className="name-text text-center font-thin">HANIF</h1>
+                            </span>
+                            <span className="absolute bottom-0 right-0 flex flex-col h-full w-full items-center justify-between rounded-[32px] overflow-hidden">
+                                <span className="name-header w-full px-[32px] py-[16px] flex items-center justify-between rounded-t-[32px] overflow-hidden z-1">
                                     <h4 className="text-[11pt] leading-[11pt] font-medium">Image Viewer</h4>
                                     <h5 className="text-[11pt] leading-[11pt] font-medium">me.webp</h5>
                                 </span>
-                                <span ref={nameContainerRef} className="name-container w-full grow flex flex-col items-center justify-center overflow-hidden">
-                                    <h1 className="name-text text-center font-thin">NAUFAL</h1>
-                                    <h1 className="name-text text-center font-thin">HANIF</h1>
-                                </span>
-                                <span className="name-footer absolute bottom-0 w-full px-[32px] mb-[24px] flex items-center justify-between rounded-b-[32px] overflow-hidden z-1">
+                                <span className="name-footer w-full px-[32px] mb-[24px] flex items-center justify-between rounded-b-[32px] overflow-hidden z-1">
                                     <h5 className="text-[10pt] leading-[10pt] font-medium">1024 px</h5>
                                     <h5 className="text-[10pt] leading-[10pt] font-medium">81.7 KB</h5>
                                 </span>
