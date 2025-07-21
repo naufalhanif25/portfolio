@@ -14,26 +14,23 @@ export function BackToTop({
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
-        const bodyWidth = document.querySelector("body")?.clientWidth;
-        const bodyHeight = document.querySelector("body")?.clientHeight;
+        const bodyElement = document.body;
+        const bodyWidth = bodyElement.clientWidth;
+        const bodyHeight = bodyElement.clientHeight;
+        const buttonElement = buttonRef.current;
 
         const handleScroll = () => {
-            const isBottom =
-                window.innerHeight + window.scrollY >=
-                document.body.offsetHeight - 8;
+            const isBottom = window.innerHeight + window.scrollY >= bodyElement.offsetHeight - 8;
 
             if (isBottom) {
-                if (buttonRef.current) {
-                    if (Number(bodyWidth) >= 800 || Number(bodyHeight) >= 800) {
-                        buttonRef.current.style.transform = "translateY(-34px)";
-                    } 
-                    else {
-                        buttonRef.current.style.transform = "translateY(-24px)";
-                    }
+                if (buttonElement) {
+                    if (bodyWidth && bodyHeight && (bodyWidth >= 768 || bodyHeight >= 768)) buttonElement.style.transform = "translateY(-34px)";
+                    else buttonElement.style.transform = "translateY(-24px)";
                 }
-            } else {
-                if (buttonRef.current) {
-                    buttonRef.current.style.transform = "translateY(0px)";
+            } 
+            else {
+                if (buttonElement) {
+                    buttonElement.style.transform = "translateY(0px)";
                 }
             }
         };
@@ -43,14 +40,13 @@ export function BackToTop({
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [buttonRef]);
 
     return (
         <>
             <button
-                className="backtotop z-9999 w-[38px] h-[38px] fixed flex items-center justify-center bottom-[24px] right-[24px] rounded-[32px]"
+                className="backtotop z-1000 w-[38px] h-[38px] fixed flex items-center justify-center bottom-[24px] right-[24px] rounded-[32px]"
                 onClick={onClick}
-                id="backtotop"
                 ref={buttonRef}
             >
                 <svg
