@@ -499,7 +499,7 @@ export default function Home() {
                                 className="my-photo absolute bottom-0 pointer-events-none z-2"
                                 width={720}
                                 height={720}
-                                src="/image/me.webp"
+                                src="/images/me.webp"
                                 alt="Naufal Hanif"
                             />
                         </span>
@@ -583,7 +583,7 @@ export default function Home() {
                                 >
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/image/mubes.png"
+                                        imageUrl="/images/mubes.png"
                                         content="MUBES HMIF 2024"
                                         desc="HMIF 2024 Grand Conference website"
                                         techstack={["Laravel", "MySQL"]}
@@ -591,14 +591,14 @@ export default function Home() {
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/image/tkid.png"
+                                        imageUrl="/images/tkid.png"
                                         content="TransKoetaradja.id"
                                         desc="Trans Koetaradja city bus website prototype"
                                         techstack={["Figma"]}
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/image/bluestamp.png"
+                                        imageUrl="/images/bluestamp.png"
                                         content="Bluestamp"
                                         desc="Venting and story sharing website"
                                         techstack={["Laravel", "MySQL"]}
@@ -606,7 +606,7 @@ export default function Home() {
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/image/zenosent.png"
+                                        imageUrl="/images/zenosent.png"
                                         content="Zenosent"
                                         desc="Journal finder desktop app"
                                         techstack={["Electron.js"]}
@@ -614,7 +614,7 @@ export default function Home() {
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/image/teras-beasiswa.png"
+                                        imageUrl="/images/teras-beasiswa.png"
                                         content="Teras Beasiswa"
                                         desc="Indonesia scholarship search engine"
                                         techstack={["Laravel", "MySQL"]}
