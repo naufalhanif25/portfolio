@@ -105,7 +105,7 @@ export function AutoScroll({
                                     width={72}
                                     height={72}
                                     className="size-[64px]"
-                                    src="/image/hmif.png"
+                                    src="/images/hmif.png"
                                     alt="HMIF"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
@@ -123,7 +123,7 @@ export function AutoScroll({
                                     width={72}
                                     height={72}
                                     className="size-[64px]"
-                                    src="/image/usk.png"
+                                    src="/images/usk.png"
                                     alt="Syiah Kuala University"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
