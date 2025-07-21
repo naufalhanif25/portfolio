@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface TypingEffectProps {
     texts: string[];
@@ -15,6 +15,7 @@ export const Typing: React.FC<TypingEffectProps> = ({
     const [textIndex, setTextIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [pause, setPause] = useState(false);
+    const insRef = useRef<HTMLModElement>(null);
 
     useEffect(() => {
         if (pause) return;
@@ -31,7 +32,8 @@ export const Typing: React.FC<TypingEffectProps> = ({
                     setPause(true);
                     setTimeout(() => setIsDeleting(true), 1000);
                 }
-            } else {
+            } 
+            else {
                 const prev = currentText.slice(0, displayedText.length - 1);
 
                 setDisplayedText(prev);
@@ -44,7 +46,7 @@ export const Typing: React.FC<TypingEffectProps> = ({
         }, speed);
 
         return () => clearTimeout(timeout);
-    }, [displayedText, isDeleting, pause, textIndex]);
+    }, [insRef, displayedText, isDeleting, pause, textIndex]);
 
     useEffect(() => {
         if (pause) {
@@ -55,7 +57,7 @@ export const Typing: React.FC<TypingEffectProps> = ({
     }, [pause]);
 
     return (
-        <ins className={"flex flex-row gap-[2px] no-underline " + className}>
+        <ins ref={insRef} className={`flex flex-row gap-[2px] no-underline ${className}`}>
             {displayedText}
             <span className="blinking-cursor font-bold"></span>
         </ins>
