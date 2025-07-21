@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { RefObject } from "react";
+import Image from "next/image";
 import * as Icons from "./icons";
 import { Review } from "./review";
 
@@ -16,24 +17,29 @@ export function AutoScroll({
     const scrollVerticalDistanceRef = useRef<number>(0);
 
     useEffect(() => {
-        if (mainExpContainerRef.current && childExpRef.current) {
-            const childHeight = childExpRef.current.offsetHeight;
-            mainExpContainerRef.current.style.height = `${childHeight}px`;
+        const mainExpContainer = mainExpContainerRef.current;
+        const childExp = childExpRef.current;
+
+        if (mainExpContainer && childExp) {
+            const childHeight = childExp.offsetHeight;
+
+            mainExpContainer.style.height = `${childHeight}px`;
         }
-    }, []);
+    }, [mainExpContainerRef, childExpRef]);
 
     useEffect(() => {
-        if (scrollVerticalContainerRef.current && scrollVerticalDistanceRef) {
-            const container = scrollVerticalContainerRef.current;
-            const childCount = container.children.length;
+        const scrollVerticalContainer = scrollVerticalContainerRef.current;
+
+        if (scrollVerticalContainer && scrollVerticalDistanceRef) {
+            const childCount = scrollVerticalContainer.children.length;
 
             if (childCount > 0) {
-                const childHeight =
-                    container.offsetHeight / childCount + 16 / childCount;
+                const childHeight = scrollVerticalContainer.offsetHeight / childCount + 16 / childCount;
+                
                 scrollVerticalDistanceRef.current = childHeight;
             }
         }
-    }, []);
+    }, [scrollVerticalContainerRef, scrollVerticalDistanceRef]);
 
     const scrollVerticalByDistance = (distance: number) => {
         if (mainExpContainerRef.current) {
@@ -95,15 +101,17 @@ export function AutoScroll({
                                 ref={childExpRef}
                                 className="supernova-display py-[20px] w-[432px] rounded-[64px] gap-[20px] flex flex-row items-center justify-center"
                             >
-                                <img
+                                <Image
+                                    width={72}
+                                    height={72}
                                     className="size-[64px]"
-                                    src="image/hmif.png"
+                                    src="/image/hmif.png"
                                     alt="HMIF"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
-                                    <p className="text-[12pt] font-semibold text-nowrap text-center">
+                                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
                                         Himpunan Mahasiswa Informatika
-                                    </p>
+                                    </h4>
                                     <hr className="second-hr w-full" />
                                     <p className="text-[10pt] text-nowrap text-center">
                                         Member of Kominkraf 2024-2025
@@ -111,27 +119,29 @@ export function AutoScroll({
                                 </span>
                             </span>
                             <span className="supernova-display py-[20px] w-[432px] rounded-[64px] gap-[20px] flex flex-row items-center justify-center">
-                                <img
+                                <Image
+                                    width={72}
+                                    height={72}
                                     className="size-[64px]"
-                                    src="image/usk.png"
+                                    src="/image/usk.png"
                                     alt="Syiah Kuala University"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
-                                    <p className="text-[12pt] font-semibold text-nowrap text-center">
+                                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
                                         Syiah Kuala University
-                                    </p>
+                                    </h4>
                                     <hr className="second-hr w-full" />
                                     <p className="text-[10pt] text-nowrap text-center">
                                         Informatics Bachelor Degree
                                     </p>
                                 </span>
                                 <span className="flex flex-col items-center justify-center gap-[4px]">
-                                    <p className="text-[10pt] font-medium text-nowrap text-center">
+                                    <h4 className="text-[10pt] font-medium text-nowrap text-center">
                                         Last GPA
-                                    </p>
-                                    <h1 className="text-[12pt] font-semibold text-nowrap text-center">
-                                        3.62 / 4
-                                    </h1>
+                                    </h4>
+                                    <h5 className="text-[12pt] font-semibold text-nowrap text-center">
+                                        3.71 / 4
+                                    </h5>
                                 </span>
                             </span>
                         </div>
@@ -187,7 +197,7 @@ export function AutoScroll({
                     title="Projects"
                     value={5}
                     icon={
-                        <Icons.Bag
+                        <Icons.Laptop
                             className="size-[42px]"
                             strokeColor="rgb(var(--jaguar-100))"
                             strokeWidth="1.2"
@@ -207,25 +217,48 @@ export function AutoScroll({
                     />
                 </span>
                 <span className="flex flex-col items-center justify-center gap-[8px]">
-                    <h1 className="text-[12pt] font-semibold text-nowrap text-center">
+                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
                         Hit Me Up
-                    </h1>
+                    </h4>
                     <hr className="second-hr w-full" />
-                    <p className="text-[10pt] text-nowrap text-center">
+                    <h5 className="text-[10pt] text-nowrap text-center">
                         Say hi anytime
-                    </p>
+                    </h5>
                 </span>
             </div>
-            <div className="flex flex-col items-center justify-center gap-[16px]">
-                <h1 className="text-[11pt] font-semibold text-nowrap text-center">
+            <div className="flex flex-col items-center justify-center gap-[14px]">
+                <h5 className="text-[11pt] font-semibold text-nowrap text-center">
                     Other Skills
-                </h1>
+                </h5>
                 <span className="jaguar-display flex flex-row items-center justify-center gap-[12px] py-[12px] px-[18px] rounded-[12px]">
                     <Icons.Photoshop className="size-[36px]" />
                     <Icons.Illustrator className="size-[36px]" />
-                    <Icons.PremierePro className="size-[36px]" />
                     <Icons.Figma className="size-[32px]" />
                     <Icons.Blender className="size-[32px]" />
+                </span>
+            </div>
+            <div
+                className="supernova-display download-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px]"
+                onClick={() =>
+                    window.open("https://drive.google.com/drive/folders/1xjmnEUV857K_OTyxAOA6nAiZNC-z8Y0j?usp=sharing")
+                }
+            >
+                <span>
+                    <Icons.Download 
+                        width={44}
+                        height={44}
+                        strokeColor="rgb(var(--supernova-200))"
+                        strokeWidth={1.1}
+                    />
+                </span>
+                <span className="flex flex-col items-center justify-center gap-[8px]">
+                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
+                        Get to know me better
+                    </h4>
+                    <hr className="second-hr w-full" />
+                    <h5 className="text-[10pt] text-nowrap text-center">
+                        Check out my CV
+                    </h5>
                 </span>
             </div>
         </div>
