@@ -677,7 +677,7 @@ export default function Home() {
                     &copy; 2025 Naufal Hanif. All rights reserved.
                 </p>
             </footer>
-            <div className="bottom-fade z-10 rounded-b-[32px] w-full h-[64px] fixed left-0 bottom-0 pointer-events-none"></div>
+            <div className="bottom-fade z-10 w-full h-[64px] fixed left-0 bottom-0 pointer-events-none"></div>
             <SpeedInsights/>
             <Analytics/>
         </div>
