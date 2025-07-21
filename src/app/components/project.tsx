@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Icons from "./icons";
-import { title } from "process";
+import Image from "next/image";
 
 export function Project({
     projectIndex,
@@ -21,11 +21,9 @@ export function Project({
 }) {
     const [rotateY, setRotateY] = useState(0);
 
-    const handleMouseMove = (
-        e: React.MouseEvent<HTMLSpanElement, MouseEvent>
-    ) => {
-        const { left, width } = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - left;
+    const handleMouseMove = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        const { left, width } = event.currentTarget.getBoundingClientRect();
+        const x = event.clientX - left;
         const center = width / 2;
         const maxRotation = 4;
         const rotateYEvent = ((x - center) / center) * maxRotation;
@@ -39,7 +37,7 @@ export function Project({
 
     return (
         <span
-            className="project-view supernova-display h-fit text-[10pt] py-[18px] px-[18px] flex flex-col items-center justify-center gap-[18px] rounded-[12px] overflow-hidden"
+            className="project-view supernova-display h-fit w-screen text-[10pt] py-[18px] px-[18px] flex flex-col items-center justify-center gap-[18px] rounded-[12px] overflow-hidden"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{
@@ -49,19 +47,21 @@ export function Project({
         >
             <span className="w-full flex-grow relative rounded-[6px] overflow-hidden">
                 <span className="project-index-container rounded-bl-[8px] px-[16px] py-[2px] z-10 top-0 right-0 absolute">
-                    <h1 className="text-[16pt] font-semibold">{projectIndex}</h1>
+                    <h2 className="text-[16pt] font-semibold">{projectIndex}</h2>
                 </span>
-                <img
+                <Image 
                     src={imageUrl}
                     className="w-full h-full object-cover opacity-[0.85]"
+                    height={360}
+                    width={640}
                     alt={content}
                 />
             </span>
             <span className="flex flex-col items-center justify-center w-full gap-[6px]">
-                <h1 className="font-bold text-[18pt]">{content}</h1>
+                <h4 className="font-bold text-[18pt]">{content}</h4>
                 <p className="text-[12pt] mb-[6px] text-center">{desc}</p>
             </span>
-            <div className="w-full flex items-center justify-between">
+            <span className="w-full flex items-center justify-between">
                 <span className="size-fit flex flex-row items-center justify-center gap-[12px]">
                     {github ? (
                         <Icons.Github
@@ -70,7 +70,7 @@ export function Project({
                             onClick={() => window.open(github)}
                         />
                     ) : (
-                        ""
+                        null
                     )}
 
                     {url ? (
@@ -83,19 +83,19 @@ export function Project({
                 </span>
 
                 {techstack ? (
-                    <div className="project-techstack flex flex-row items-center py-[4px] px-[20px] gap-[16px] w-fit rounded-[32px] overflow-hidden">
+                    <span className="project-techstack flex flex-row items-center py-[4px] px-[20px] gap-[16px] w-fit rounded-[32px] overflow-hidden">
                         {techstack?.map((item, index) => (
-                            <div
-                                key={index}
+                            <span
+                                key={`techstack-${index}`}
                             >
-                                <h1 className="text-[10pt] font-semibold">
+                                <p className="text-[10pt] font-semibold">
                                     {item}
-                                </h1>
-                            </div>
+                                </p>
+                            </span>
                         ))}
-                    </div>
+                    </span>
                 ) : null}
-            </div>
+            </span>
         </span>
     );
 }
