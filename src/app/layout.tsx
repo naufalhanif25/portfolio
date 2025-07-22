@@ -34,6 +34,9 @@ export const metadata: Metadata = {
         "Syiah Kuala University",
     ],
     icons: "images/icon.ico",
+    other: {
+        "google-site-verification": "QCAW3DiOi51Iz-5jXaXemUoOkT_4InHkMUWrvG5dYXY",
+    }
 };
 
 export default function RootLayout({
