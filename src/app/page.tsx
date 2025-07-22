@@ -635,7 +635,7 @@ export default function Home() {
                         className="footer-icon w-[24px] cursor-pointer"
                         fillColor="rgb(var(--jaguar-100))"
                         onClick={() => {
-                            window.location.href = "mailto:naufal.hanif2525@gmail.com";
+                            window.location.href = "mailto:falhnf25@gmail.com";
                         }}
                     />
                     <Icons.Github
@@ -650,7 +650,7 @@ export default function Home() {
                         fillColor="rgb(var(--jaguar-100))"
                         onClick={() =>
                             window.open(
-                                "https://api.whatsapp.com/send?phone=6282181916822"
+                                "https://api.whatsapp.com/send?phone=6285180554208"
                             )
                         }
                     />
