@@ -7,9 +7,11 @@ import { Review } from "./review";
 export function AutoScroll({
     contactRef,
     scrollToElement,
+    totalProject,
 }: {
     contactRef: RefObject<HTMLElement | null>;
     scrollToElement: any;
+    totalProject: number;
 }) {
     const mainExpContainerRef = useRef<HTMLDivElement>(null);
     const childExpRef = useRef<HTMLSpanElement>(null);
@@ -173,7 +175,7 @@ export function AutoScroll({
             <div className="flex flex-row items-center justify-center gap-[16px]">
                 <Review
                     title="Happy Clients"
-                    value={3}
+                    value={5}
                     icon={
                         <Icons.SmileEmoji
                             className="size-[38px]"
@@ -195,7 +197,7 @@ export function AutoScroll({
                 />
                 <Review
                     title="Projects"
-                    value={5}
+                    value={totalProject}
                     icon={
                         <Icons.Laptop
                             className="size-[42px]"
