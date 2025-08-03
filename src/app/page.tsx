@@ -598,14 +598,6 @@ export default function Home() {
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
-                                        imageUrl="/images/bluestamp.png"
-                                        content="Bluestamp"
-                                        desc="Venting and story sharing website"
-                                        techstack={["Laravel", "MySQL"]}
-                                        github="https://github.com/naufalhanif25/bluestamp.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
                                         imageUrl="/images/zenosent.png"
                                         content="Zenosent"
                                         desc="Journal finder desktop app"
@@ -614,11 +606,37 @@ export default function Home() {
                                     />
                                     <Project
                                         projectIndex={projectIndex++}
+                                        imageUrl="/images/bluestamp.png"
+                                        content="Bluestamp"
+                                        desc="Venting and story sharing website"
+                                        techstack={["Laravel", "MySQL"]}
+                                        github="https://github.com/naufalhanif25/bluestamp.git"
+                                    />
+                                    <Project
+                                        projectIndex={projectIndex++}
+                                        url="https://anti-judol.vercel.app/"
+                                        imageUrl="/images/antijudol.png"
+                                        content="Anti Judol"
+                                        desc="Remove online gambling comments on YouTube"
+                                        techstack={["React"]}
+                                        github="https://github.com/naufalhanif25/anti-judol.git"
+                                    />
+                                    <Project
+                                        projectIndex={projectIndex++}
                                         imageUrl="/images/teras-beasiswa.png"
                                         content="Teras Beasiswa"
                                         desc="Indonesia scholarship search engine"
                                         techstack={["Laravel", "MySQL"]}
                                         github="https://github.com/naufalhanif25/teras-beasiswa.git"
+                                    />
+                                    <Project
+                                        projectIndex={projectIndex++}
+                                        url="https://www.jaksabang.xyz"
+                                        imageUrl="/images/jaksabang.png"
+                                        content="JakSabang"
+                                        desc="Integrated platform to explore Sabang"
+                                        techstack={["React", "Express", "MongoDB"]}
+                                        github="https://github.com/M-Aidil-Fitrah/JakSabang.git"
                                     />
                                 </span>
                             </span>
