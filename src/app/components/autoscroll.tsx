@@ -206,7 +206,7 @@ export function AutoScroll({
                 />
             </div>
             <div
-                className="supernova-display hitmeup-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px]"
+                className="supernova-display hitmeup-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] cursor-pointer"
                 onClick={() => scrollToElement(contactRef)}
             >
                 <span>
@@ -217,11 +217,11 @@ export function AutoScroll({
                     />
                 </span>
                 <span className="flex flex-col items-center justify-center gap-[8px]">
-                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
+                    <h4 className="text-[12pt] font-semibold text-nowrap text-center pointer-events-none select-none">
                         Hit Me Up
                     </h4>
                     <hr className="second-hr w-full" />
-                    <h5 className="text-[10pt] text-nowrap text-center">
+                    <h5 className="text-[10pt] text-nowrap text-center pointer-events-none select-none">
                         Say hi anytime
                     </h5>
                 </span>
@@ -238,7 +238,7 @@ export function AutoScroll({
                 </span>
             </div>
             <div
-                className="supernova-display download-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px]"
+                className="supernova-display download-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] cursor-pointer"
                 onClick={() =>
                     window.open("https://drive.google.com/drive/folders/1xjmnEUV857K_OTyxAOA6nAiZNC-z8Y0j?usp=sharing")
                 }
@@ -252,11 +252,11 @@ export function AutoScroll({
                     />
                 </span>
                 <span className="flex flex-col items-center justify-center gap-[8px]">
-                    <h4 className="text-[12pt] font-semibold text-nowrap text-center">
+                    <h4 className="text-[12pt] font-semibold text-nowrap text-center pointer-events-none select-none">
                         Get to know me better
                     </h4>
                     <hr className="second-hr w-full" />
-                    <h5 className="text-[10pt] text-nowrap text-center">
+                    <h5 className="text-[10pt] text-nowrap text-center pointer-events-none select-none">
                         Check out my CV
                     </h5>
                 </span>
