@@ -10,6 +10,7 @@ import { Project } from "./components/project";
 import { AutoScroll } from "./components/autoscroll";
 import { Scrolling } from "./components/scrolling";
 import Image from "next/image";
+import projects from "./assets/json/projects.json";
 
 export default function Home() {
     const [code, setCode] = useState<string>("console.log(\"Naufal Hanif\");");
@@ -38,8 +39,7 @@ export default function Home() {
     const [photoContainerHeight, setPhotoContainerHeight] = useState(0);
     const [showScrollingText, setShowScrollingText] = useState(false);
     const speedArr = [1.0, 1.25, 1.5, 2.0];
-
-    let projectIndex = 1;
+    const totalProject = projects.length;
 
     const scrollToElement = (ref: React.RefObject<HTMLElement | null>) => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -150,6 +150,7 @@ export default function Home() {
                 key={`autoscroll-${index}`}
                 contactRef={contactRef}
                 scrollToElement={scrollToElement}
+                totalProject={totalProject}
             />
         ));
     };
@@ -247,7 +248,7 @@ export default function Home() {
         window.addEventListener("resize", checkNameContainerWidth);
 
         return () => window.removeEventListener("resize", checkNameContainerWidth);
-    }, [nameContainerRef])
+    }, [nameContainerRef]);
 
     return (
         <div ref={mainRef}>
@@ -581,63 +582,22 @@ export default function Home() {
                                     ref={scrollContainerRef}
                                     className="w-fit flex flex-row gap-[18px] px-[18px]"
                                 >
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        imageUrl="/images/mubes.png"
-                                        content="MUBES HMIF 2024"
-                                        desc="HMIF 2024 Grand Conference website"
-                                        techstack={["Laravel", "MySQL"]}
-                                        github="https://github.com/naufalhanif25/website-mubes-2024.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        imageUrl="/images/tkid.png"
-                                        content="TransKoetaradja.id"
-                                        desc="Trans Koetaradja city bus website prototype"
-                                        techstack={["Figma"]}
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        imageUrl="/images/zenosent.png"
-                                        content="Zenosent"
-                                        desc="Journal finder desktop app"
-                                        techstack={["Electron.js"]}
-                                        github="https://github.com/naufalhanif25/zenosent.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        imageUrl="/images/bluestamp.png"
-                                        content="Bluestamp"
-                                        desc="Venting and story sharing website"
-                                        techstack={["Laravel", "MySQL"]}
-                                        github="https://github.com/naufalhanif25/bluestamp.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        url="https://anti-judol.vercel.app/"
-                                        imageUrl="/images/antijudol.png"
-                                        content="Anti Judol"
-                                        desc="Remove online gambling comments on YouTube"
-                                        techstack={["React"]}
-                                        github="https://github.com/naufalhanif25/anti-judol.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        imageUrl="/images/teras-beasiswa.png"
-                                        content="Teras Beasiswa"
-                                        desc="Indonesia scholarship search engine"
-                                        techstack={["Laravel", "MySQL"]}
-                                        github="https://github.com/naufalhanif25/teras-beasiswa.git"
-                                    />
-                                    <Project
-                                        projectIndex={projectIndex++}
-                                        url="https://www.jaksabang.xyz"
-                                        imageUrl="/images/jaksabang.png"
-                                        content="JakSabang"
-                                        desc="Integrated platform to explore Sabang"
-                                        techstack={["React", "Express", "MongoDB"]}
-                                        github="https://github.com/M-Aidil-Fitrah/JakSabang.git"
-                                    />
+                                    {projects.map((project, index) => {
+                                        const currentIndex = index + 1;
+
+                                        return (
+                                            <Project
+                                                key={currentIndex}
+                                                projectIndex={currentIndex}
+                                                imageUrl={project.imageUrl}
+                                                url={project.url || ""}
+                                                content={project.content}
+                                                desc={project.desc}
+                                                techstack={project.techstack}
+                                                github={project.github || ""}
+                                            />
+                                        )
+                                    })}
                                 </span>
                             </span>
                         </div>
