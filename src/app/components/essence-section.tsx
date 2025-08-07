@@ -15,7 +15,7 @@ export const EssenceSection = forwardRef<
     const [photoContainerHeight, setPhotoContainerHeight] = useState(0);
     const nameContainerRef = useRef<HTMLSpanElement>(null);
     const textAreaIndexRef = useRef<HTMLSpanElement>(null);
-    const [textAreaLines, setTextAreaLines] = useState(code.length);
+    const [textAreaLines, setTextAreaLines] = useState(code.split("\n").length);
     const [textAreaScrollPos, setTextAreaScrollPos] = useState(0);
 
     const executeCode = () => {
@@ -236,7 +236,7 @@ export const EssenceSection = forwardRef<
                                 onKeyDown={checkTextAreaLines}
                                 onKeyUp={checkTextAreaLines}
                                 onScroll={updateScrollPos}
-                                className="textarea-code-editor h-full grow text-[12pt] text-nowrap outline-none resize-none overflow-auto no-scrollbar overflow-auto"
+                                className="textarea-code-editor h-full grow text-[12pt] text-nowrap outline-none resize-none no-scrollbar overflow-auto overscroll-none"
                                 spellCheck={false}
                                 value={code}
                                 onChange={(e) =>
