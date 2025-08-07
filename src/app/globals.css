@@ -440,25 +440,25 @@ footer {
     will-change: transform;
 }
 
-.project-title {
+.projects-title {
     animation: frombottom 1s ease-in-out;
 }
 
-.project-index-container {
+.projects-index-container {
     background-color: rgb(var(--supernova-400));
     box-shadow: -2px 2px 8px rgba(var(--supernova-500), 0.25);
 }
 
-.project-section .project-section-child {
+.projects-section .projects-section-child {
     animation: frombottom 1s ease-in-out;
 }
 
-.project-view {
+.projects-view {
     width: 446px;
     transition: width height 160ms ease-out;
 }
 
-.project-view img {
+.projects-view img {
     height: 232px;
     transition: width height 160ms ease-out;
 }
@@ -468,35 +468,35 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .project-view {
+    .projects-view {
         width: 386px;
     }
 
-    .project-view img {
+    .projects-view img {
         height: 196px;
     }
 }
 
 @media (max-width: 640px) {
-    .project-view {
+    .projects-view {
         width: calc(100vw - 36px);
     }
 }
 
-.project-techstack {
+.projects-techstack {
     background-color: rgb(var(--supernova-400));
 }
 
-.project-techstack span p {
+.projects-techstack span p {
     color: rgb(var(--supernova-700));
 }
 
-.project-icon {
+.projects-icon {
     fill: rgb(var(--supernova-400));
     transition: transform 160ms ease-out;
 }
 
-.project-icon:hover {
+.projects-icon:hover {
     transform: scale(108%);
 }
 
