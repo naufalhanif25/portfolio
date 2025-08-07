@@ -35,8 +35,9 @@ export const metadata: Metadata = {
     ],
     icons: "images/icon.ico",
     other: {
-        "google-site-verification": "QCAW3DiOi51Iz-5jXaXemUoOkT_4InHkMUWrvG5dYXY",
-    }
+        "google-site-verification":
+            "QCAW3DiOi51Iz-5jXaXemUoOkT_4InHkMUWrvG5dYXY",
+    },
 };
 
 export default function RootLayout({
@@ -45,9 +46,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className="overscroll-none">
             <body
-                className={`${montserrat.variable} ${codepro.variable} antialiased overflow-x-hidden`}
+                className={`${montserrat.variable} ${codepro.variable} antialiased overflow-x-hidden overscroll-none`}
             >
                 {children}
             </body>
