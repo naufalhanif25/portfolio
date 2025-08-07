@@ -14,20 +14,20 @@ export function AutoScroll({
     totalProject: number;
 }) {
     const mainExpContainerRef = useRef<HTMLDivElement>(null);
-    const childExpRef = useRef<HTMLSpanElement>(null);
+    const firstChildExpRef = useRef<HTMLSpanElement>(null);
     const scrollVerticalContainerRef = useRef<HTMLDivElement>(null);
     const scrollVerticalDistanceRef = useRef<number>(0);
 
     useEffect(() => {
         const mainExpContainer = mainExpContainerRef.current;
-        const childExp = childExpRef.current;
+        const firstChildExp = firstChildExpRef.current;
 
-        if (mainExpContainer && childExp) {
-            const childHeight = childExp.offsetHeight;
+        if (mainExpContainer && firstChildExp) {
+            const childHeight = `${firstChildExp.offsetHeight}px`;
 
-            mainExpContainer.style.height = `${childHeight}px`;
+            mainExpContainer.style.height = childHeight;
         }
-    }, [mainExpContainerRef, childExpRef]);
+    }, [mainExpContainerRef, firstChildExpRef]);
 
     useEffect(() => {
         const scrollVerticalContainer = scrollVerticalContainerRef.current;
@@ -36,8 +36,10 @@ export function AutoScroll({
             const childCount = scrollVerticalContainer.children.length;
 
             if (childCount > 0) {
-                const childHeight = scrollVerticalContainer.offsetHeight / childCount + 16 / childCount;
-                
+                const childHeight =
+                    scrollVerticalContainer.offsetHeight / childCount +
+                    16 / childCount;
+
                 scrollVerticalDistanceRef.current = childHeight;
             }
         }
@@ -61,8 +63,8 @@ export function AutoScroll({
     };
 
     return (
-        <div className="w-fit flex flex-row items-center justify-start gap-[64px]">
-            <span className="jaguar-display py-[20px] px-[32px] rounded-[12px] gap-[12px] flex flex-col items-center justify-center">
+        <div className="w-fit flex flex-row items-center justify-start">
+            <span className="jaguar-display py-[20px] px-[32px] rounded-[12px] gap-[12px] mx-[32px] flex flex-col items-center justify-center">
                 <h1 className="text-[11pt] font-medium">Main Tech Stack</h1>
                 <span className="flex flex-row items-center justify-center gap-[16px]">
                     <Icons.MySQL
@@ -87,7 +89,7 @@ export function AutoScroll({
                     />
                 </span>
             </span>
-            <div className="flex flex-ro items-center justify-center gap-[12px]">
+            <div className="flex flex-ro items-center justify-center gap-[12px] mx-[32px]">
                 <div className="max-h-[108px] overflow-hidden">
                     <div
                         ref={mainExpContainerRef}
@@ -97,17 +99,17 @@ export function AutoScroll({
                     >
                         <div
                             ref={scrollVerticalContainerRef}
-                            className="relative flex flex-col h-fit items-center justify-center gap-[16px]"
+                            className="relative flex flex-col items-center justify-center gap-[16px]"
                         >
                             <span
-                                ref={childExpRef}
+                                ref={firstChildExpRef}
                                 className="supernova-display py-[20px] w-[432px] rounded-[64px] gap-[20px] flex flex-row items-center justify-center"
                             >
                                 <Image
                                     width={72}
                                     height={72}
                                     className="size-[64px]"
-                                    src="/images/hmif.png"
+                                    src="/images/hmif.webp"
                                     alt="HMIF"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
@@ -120,12 +122,12 @@ export function AutoScroll({
                                     </p>
                                 </span>
                             </span>
-                            <span className="supernova-display py-[20px] w-[432px] rounded-[64px] gap-[20px] flex flex-row items-center justify-center">
+                            <div className="supernova-display w-[432px] py-[20px] w-full rounded-[64px] gap-[20px] flex items-center justify-center">
                                 <Image
                                     width={72}
                                     height={72}
                                     className="size-[64px]"
-                                    src="/images/usk.png"
+                                    src="/images/usk.webp"
                                     alt="Syiah Kuala University"
                                 />
                                 <span className="flex flex-col items-center justify-center gap-[8px]">
@@ -145,7 +147,7 @@ export function AutoScroll({
                                         3.71 / 4
                                     </h5>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -172,7 +174,7 @@ export function AutoScroll({
                     </button>
                 </span>
             </div>
-            <div className="flex flex-row items-center justify-center gap-[16px]">
+            <div className="flex flex-row items-center justify-center gap-[16px] mx-[32px]">
                 <Review
                     title="Happy Clients"
                     value={5}
@@ -208,7 +210,7 @@ export function AutoScroll({
                 />
             </div>
             <div
-                className="supernova-display hitmeup-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] cursor-pointer"
+                className="supernova-display hitmeup-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] mx-[32px] cursor-pointer"
                 onClick={() => scrollToElement(contactRef)}
             >
                 <span>
@@ -228,7 +230,7 @@ export function AutoScroll({
                     </h5>
                 </span>
             </div>
-            <div className="flex flex-col items-center justify-center gap-[14px]">
+            <div className="flex flex-col items-center justify-center gap-[14px] mx-[32px]">
                 <h5 className="text-[11pt] font-semibold text-nowrap text-center">
                     Other Skills
                 </h5>
@@ -240,13 +242,15 @@ export function AutoScroll({
                 </span>
             </div>
             <div
-                className="supernova-display download-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] cursor-pointer"
+                className="supernova-display download-button rounded-[64px] flex flex-row items-center justify-center py-[20px] px-[36px] gap-[20px] mx-[32px] cursor-pointer"
                 onClick={() =>
-                    window.open("https://drive.google.com/drive/folders/1xjmnEUV857K_OTyxAOA6nAiZNC-z8Y0j?usp=sharing")
+                    window.open(
+                        "https://drive.google.com/drive/folders/1xjmnEUV857K_OTyxAOA6nAiZNC-z8Y0j?usp=sharing"
+                    )
                 }
             >
                 <span>
-                    <Icons.Download 
+                    <Icons.Download
                         width={44}
                         height={44}
                         strokeColor="rgb(var(--supernova-200))"
