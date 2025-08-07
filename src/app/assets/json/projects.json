@@ -1,6 +1,6 @@
 [
     {
-        "imageUrl": "/images/mubes.png",
+        "imageUrl": "/images/mubes.webp",
         "url": null,
         "content": "MUBES HMIF 2024",
         "desc": "HMIF 2024 Grand Conference website",
@@ -8,7 +8,7 @@
         "github": "https://github.com/naufalhanif25/website-mubes-2024.git"
     },
     {
-        "imageUrl": "/images/tkid.png",
+        "imageUrl": "/images/tkid.webp",
         "url": null,
         "content": "TransKoetaradja.id",
         "desc": "Trans Koetaradja city bus website prototype",
@@ -16,7 +16,7 @@
         "github": null
     },
     {
-        "imageUrl": "/images/zenosent.png",
+        "imageUrl": "/images/zenosent.webp",
         "url": null,
         "content": "Zenosent",
         "desc": "Journal finder desktop app",
@@ -24,7 +24,7 @@
         "github": "https://github.com/naufalhanif25/zenosent.git"
     },
     {
-        "imageUrl": "/images/bluestamp.png",
+        "imageUrl": "/images/bluestamp.webp",
         "url": null,
         "content": "Bluestamp",
         "desc": "Venting and story sharing website",
@@ -33,14 +33,14 @@
     },
     {
         "url": "https://anti-judol.vercel.app/",
-        "imageUrl": "/images/antijudol.png",
+        "imageUrl": "/images/antijudol.webp",
         "content": "Anti Judol",
         "desc": "Remove online gambling comments on YouTube",
         "techstack": ["React"],
         "github": "https://github.com/naufalhanif25/anti-judol.git"
     },
     {
-        "imageUrl": "/images/teras-beasiswa.png",
+        "imageUrl": "/images/teras-beasiswa.webp",
         "url": null,
         "content": "Teras Beasiswa",
         "desc": "Indonesia scholarship search engine",
@@ -49,7 +49,7 @@
     },
     {
         "url": "https://www.jaksabang.xyz",
-        "imageUrl": "/images/jaksabang.png",
+        "imageUrl": "/images/jaksabang.webp",
         "content": "JakSabang",
         "desc": "Integrated platform to explore Sabang",
         "techstack": ["React", "Express", "MongoDB"],
